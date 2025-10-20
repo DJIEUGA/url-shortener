@@ -1,0 +1,25 @@
+import string
+
+ALPHABET = string.ascii_letters + string.digits  # 62 characters
+
+def encode(num: int) -> str:
+    """Encodes a numeric ID to a base62 string."""
+    if num == 0:
+        return ALPHABET[0]
+    arr = []
+    base = len(ALPHABET)
+    while num:
+        num, rem = divmod(num, base)
+        arr.append(ALPHABET[rem])
+    arr.reverse()
+    return ''.join(arr)
+
+
+def decode(s: str) -> int:
+    """ Decodes a base62 string to its numeric ID. """
+    base = len(ALPHABET)
+    num = 0
+    for char in s:
+        num = num * base + ALPHABET.index(char)
+    return num
+

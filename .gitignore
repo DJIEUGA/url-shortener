@@ -1,0 +1,60 @@
+# Python byte-compiled / caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environments / Environment files
+.env
+.env.bak
+venv/
+.venv/
+env/
+ENV/
+
+# Flask instance, logs and DBs
+instance/
+*.log
+*.pid
+*.db
+*.sqlite3
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Testing / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Migrations / caches
+migrations/__pycache__/
+migrations/pycache/
+
+# Misc caches / tools
+.mypy_cache/
+.ipynb_checkpoints/
+__pypackages__/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Docker / temp files
+*.bak
+*.tmp
+*.swp
+**/.docker/
+**/docker-compose.override.yml
