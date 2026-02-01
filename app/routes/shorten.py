@@ -10,6 +10,7 @@ bp = Blueprint("shorten", __name__, url_prefix="/api")
 def shorten_url():
     data = request.get_json()
     original_url = data.get("url")
+    print(original_url)
 
     if not original_url:
         return jsonify({"error": "URL is required"}), 400
@@ -23,8 +24,7 @@ def shorten_url():
     new_url.short_code = encode(new_url.id)
     db.session.commit()
 
-    # Cache the mapping in Redis
-    cache.set(new_url.short_code, original_url)
+    # Cache the mapping in Redis # cache.set(new_url.short_code, original_url)
 
     short_url = request.host_url + new_url.short_code
     return jsonify({short_url: short_url}), 201

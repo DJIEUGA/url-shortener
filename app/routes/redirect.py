@@ -6,15 +6,14 @@ bp = Blueprint("redirect", __name__)
 
 @bp.route("/<short_code>")
 def redirect_url(short_code):
-    # Check Redis first
-    original_url = cache.get(short_code)
+    # Check Redis first 
+    original_url = ''
 
     if not original_url:
         url = URL.query.filter_by(short_code=short_code).first()
         if not url:
             abort(404)
-        original_url = url.original_url
-        cache.set(short_code, original_url)
+        original_url = url.original_url 
     else:
         url = URL.query.filter_by(short_code=short_code).first()
     
