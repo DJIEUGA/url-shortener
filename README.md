@@ -63,7 +63,7 @@ cd url_shortener
 ```pip install -r requirements.txt```
 
 ### 4. Environment Variables
-Create a .env file at the root of the project with the content below:
+Create a ```.env``` file at the root of the project with the content below:
 ```
 FLASK_ENV=development
 FLASK_APP=manage.py
@@ -158,3 +158,4 @@ Example request:
 👨‍💻 Contributors:
 - Elvira @elvira-create
 - Ryle Djieuga @DJIEUGA
+
