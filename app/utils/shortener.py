@@ -1,18 +1,14 @@
 import string
+import secrets
 
 ALPHABET = string.ascii_letters + string.digits  # 62 characters
 
-def encode(num: int) -> str:
+def encode(length=5) -> str:
     """Encodes a numeric ID to a base62 string."""
-    if num == 0:
-        return ALPHABET[0]
-    arr = []
-    base = len(ALPHABET)
-    while num:
-        num, rem = divmod(num, base)
-        arr.append(ALPHABET[rem])
-    arr.reverse()
-    return ''.join(arr)
+    code = ""
+    for _ in range(length):
+        code += secrets.choice(ALPHABET)
+    return code
 
 
 def decode(s: str) -> int:

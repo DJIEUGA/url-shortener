@@ -21,7 +21,7 @@ def shorten_url():
     db.session.commit()
 
     # Generate short code using the ID
-    new_url.short_code = encode(new_url.id)
+    new_url.short_code = encode()
     db.session.commit()
 
     # Cache the mapping in Redis # cache.set(new_url.short_code, original_url)

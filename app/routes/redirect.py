@@ -20,6 +20,7 @@ def redirect_url(short_code):
     # Increment click count
     if url:
         url.click_count += 1
+        print(f"click count: {url.click_count}")
         db.session.commit()
 
     return redirect(original_url)
