@@ -14,3 +14,16 @@ export interface URLStats {
   totalClicks: number;
   recentGrowth: string;
 }
+
+export interface Url{
+    id: string;
+    originalUrl: string;
+    shortCode: string;
+    createdAt: string;
+    clickCount: number;
+    onClick: () => void;
+    onDelete: () => void;
+}
+
+
+

@@ -1,8 +1,8 @@
 import type { TransformedURL } from '@/shared/types';
+import apiClient from './apiClient';
 
 export async function fetchUrls(): Promise<TransformedURL[]> {
-  const res = await fetch('/api/urls');
-  const data = await res.json();
+  const { data } = await apiClient.get<TransformedURL[]>('/urls');
   return Array.isArray(data) ? data : [];
 }
 
@@ -10,16 +10,13 @@ export async function createUrl(
   originalUrl: string,
   transformationType: 'Shorten' | 'Clean'
 ): Promise<TransformedURL> {
-  const res = await fetch('/api/urls', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ originalUrl, transformationType }),
+  const { data } = await apiClient.post<TransformedURL>('/urls', {
+    originalUrl,
+    transformationType,
   });
-  if (!res.ok) throw new Error('Failed to create URL');
-  return res.json();
+  return data;
 }
 
 export async function deleteUrl(id: string): Promise<void> {
-  const res = await fetch(`/api/urls/${id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error('Failed to delete URL');
+  await apiClient.delete(`/urls/${id}`);
 }

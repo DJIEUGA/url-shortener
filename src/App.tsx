@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link2 } from 'lucide-react';
 import { useUrls } from '@/features/urls/hooks/useUrls';
 import { StatsGrid } from '@/features/urls/components/StatsGrid';
@@ -26,7 +25,7 @@ export default function App() {
             <h1 className="text-xl font-semibold tracking-tight">Url shorty</h1>
           </div>
           <p className="text-xs text-gh-gray-text font-medium bg-gh-gray-bg px-2 py-1 border border-gh-gray-border rounded-full">
-            TRANSFORM_PRO / v1.0
+            version 1.0
           </p>
         </header>
 
