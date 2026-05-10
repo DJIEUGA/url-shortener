@@ -37,6 +37,10 @@
   }
 }
 
+body{
+  background-color: black; 
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
