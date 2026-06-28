@@ -6,13 +6,10 @@ export async function fetchUrls(): Promise<TransformedURL[]> {
   return Array.isArray(data) ? data : [];
 }
 
-export async function createUrl(
-  originalUrl: string,
-  transformationType: 'Shorten' | 'Clean'
-): Promise<TransformedURL> {
+export async function createUrl(originalUrl: string): Promise<TransformedURL> {
   const { data } = await apiClient.post<TransformedURL>('/urls', {
     originalUrl,
-    transformationType,
+    transformationType: 'Shorten',
   });
   return data;
 }

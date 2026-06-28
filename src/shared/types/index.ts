@@ -3,7 +3,7 @@ export interface TransformedURL {
   originalUrl: string;
   transformedUrl: string;
   alias: string;
-  transformationType: 'Shorten' | 'Clean';
+  transformationType: 'Shorten';
   clicks: number;
   createdAt: string;
   status: 'Active' | 'Archived';

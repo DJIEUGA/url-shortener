@@ -1,4 +1,4 @@
-import { Link2 } from 'lucide-react';
+import { Link2, AlertCircle } from 'lucide-react';
 import { useUrls } from '@/features/urls/hooks/useUrls';
 import { StatsGrid } from '@/features/urls/components/StatsGrid';
 import { UrlForm } from '@/features/urls/components/UrlForm';
@@ -6,7 +6,7 @@ import { LatestUrl } from '@/features/urls/components/LatestUrl';
 import { UrlList } from '@/features/urls/components/UrlList';
 
 export default function App() {
-  const { urls, loading, isTransforming, copyStatus, refresh, transform, remove, copyToClipboard } = useUrls();
+  const { urls, loading, isTransforming, error, copyStatus, refresh, transform, remove, copyToClipboard } = useUrls();
 
   const stats = {
     totalUrls: urls.length,
@@ -28,6 +28,13 @@ export default function App() {
             version 1.0
           </p>
         </header>
+
+        {error && (
+          <div className="flex items-center gap-2 mb-6 px-4 py-3 rounded-md bg-red-50 border border-red-200 text-red-700 text-sm">
+            <AlertCircle size={15} className="shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
 
         <StatsGrid stats={stats} />
 

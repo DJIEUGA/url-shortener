@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { cn } from '@/shared/lib/cn';
 
 interface Props {
-  onSubmit: (url: string, type: 'Shorten' | 'Clean') => Promise<void>;
+  onSubmit: (url: string) => Promise<void>;
   isSubmitting: boolean;
 }
 
@@ -14,7 +14,6 @@ function isValidUrl(url: string): boolean {
 
 export function UrlForm({ onSubmit, isSubmitting }: Props) {
   const [inputUrl, setInputUrl] = useState('');
-  const [type, setType] = useState<'Shorten' | 'Clean'>('Shorten');
   const [urlError, setUrlError] = useState<string | null>(null);
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +25,7 @@ export function UrlForm({ onSubmit, isSubmitting }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputUrl || urlError) return;
-    await onSubmit(inputUrl, type);
+    await onSubmit(inputUrl);
     setInputUrl('');
   };
 
@@ -72,23 +71,6 @@ export function UrlForm({ onSubmit, isSubmitting }: Props) {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex bg-gh-gray-bg border border-gh-gray-border rounded-md p-0.5 flex-1 max-w-sm">
-              {(['Shorten', 'Clean'] as const).map(t => (
-                <button
-                  key={t}
-                  type="button"
-                  onClick={() => setType(t)}
-                  className={cn(
-                    'flex-1 py-1.5 rounded-md text-xs font-semibold transition-all',
-                    type === t
-                      ? 'bg-white text-gh-blue shadow-sm ring-1 ring-gh-gray-border'
-                      : 'text-gh-gray-text hover:text-slate-900'
-                  )}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
             <button
               type="submit"
               disabled={disabled}

@@ -6,14 +6,16 @@ export function useUrls() {
   const [urls, setUrls] = useState<TransformedURL[]>([]);
   const [loading, setLoading] = useState(true);
   const [isTransforming, setIsTransforming] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [copyStatus, setCopyStatus] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       setUrls(await fetchUrls());
-    } catch (err) {
-      console.error('Failed to fetch URLs:', err);
+    } catch (err: unknown) {
+      setError((err as { response?: { data?: { error?: string } } })?.response?.data?.error ?? (err as Error)?.message ?? 'Failed to load URLs');
     } finally {
       setLoading(false);
     }
@@ -21,13 +23,14 @@ export function useUrls() {
 
   useEffect(() => { refresh(); }, [refresh]);
 
-  const transform = useCallback(async (originalUrl: string, type: 'Shorten' | 'Clean') => {
+  const transform = useCallback(async (originalUrl: string) => {
     setIsTransforming(true);
+    setError(null);
     try {
-      await createUrl(originalUrl, type);
+      await createUrl(originalUrl);
       await refresh();
-    } catch (err) {
-      console.error('Transformation failed:', err);
+    } catch (err: unknown) {
+      setError((err as { response?: { data?: { error?: string } } })?.response?.data?.error ?? (err as Error)?.message ?? 'Failed to shorten URL');
     } finally {
       setIsTransforming(false);
     }
@@ -35,11 +38,12 @@ export function useUrls() {
 
   const remove = useCallback(async (id: string) => {
     if (!confirm('Permanently remove this entry?')) return;
+    setError(null);
     try {
       await deleteUrl(id);
       setUrls(prev => prev.filter(u => u.id !== id));
-    } catch (err) {
-      console.error('Delete failed:', err);
+    } catch (err: unknown) {
+      setError((err as { response?: { data?: { error?: string } } })?.response?.data?.error ?? (err as Error)?.message ?? 'Failed to delete URL');
     }
   }, []);
 
@@ -49,5 +53,5 @@ export function useUrls() {
     setTimeout(() => setCopyStatus(null), 2000);
   }, []);
 
-  return { urls, loading, isTransforming, copyStatus, refresh, transform, remove, copyToClipboard };
+  return { urls, loading, isTransforming, error, copyStatus, refresh, transform, remove, copyToClipboard };
 }
